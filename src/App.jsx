@@ -14,7 +14,9 @@ class App extends Component {
   
   componentDidMount() {
     this.socket = new WebSocket('ws://localhost:3001');
-    console.log("Connected to server");
+    this.socket.onopen = (event) => {
+      console.log("Connected to server");
+    };
     this.socket.onmessage = (event) => {
       const newMessage = JSON.parse(event.data);
       this.setState({
@@ -25,7 +27,7 @@ class App extends Component {
 
   onNewMessage(object) {
       // Add a new message to the list of messages in the data store
-      const data = {content: object.message, username: object.currentUser};
+      const data = {type:'postMessage', content: object.message, username: object.currentUser};
       this.socket.send(JSON.stringify(data));
   }
 
