@@ -9,6 +9,7 @@ class App extends Component {
       type:'',
       currentUser:'Bob',
       messages: [],
+      userCount: 0
     };
     this.sendMsg = this.sendMsg.bind(this);
     this.changeName = this.changeName.bind(this)
@@ -22,6 +23,7 @@ class App extends Component {
 
     this.socket.onmessage = (event) => {
       const newMessage = JSON.parse(event.data);
+      console.log("checking",newMessage);
       switch(newMessage.type) {
         case "incomingMessage":
           // handle incoming message
@@ -32,6 +34,11 @@ class App extends Component {
         case "incomingNotification":
           this.setState({
             messages: this.state.messages.concat(newMessage)
+          });
+          break;
+        case "userCount":
+          this.setState({
+            userCount: newMessage.userCount
           });
           break;
         default:
@@ -60,6 +67,7 @@ class App extends Component {
       <div>
         <nav className="navbar">
           <a href="/" className="navbar-brand">Chatty</a>
+          <span className="user-counter">{this.state.userCount} users Online</span>
         </nav>
         <MessageList messages={this.state.messages}/>
         <Chatbar currentUser={this.state.currentUser} sendMsg={ this.sendMsg } changeName={this.changeName} />
