@@ -43,7 +43,7 @@ class App extends Component {
           break;
         default:
           // show an error in the console if the message type is unknown
-          throw new Error("Unknown event type " + data.type);
+          throw new Error("Unknown event type" + data.type);
       }
     }
   }

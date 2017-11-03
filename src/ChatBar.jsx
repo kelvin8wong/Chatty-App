@@ -7,7 +7,7 @@ class Chatbar extends Component {
       currentUser: props.currentUser,
       message: '',
     }
-    this.keyPressUser =this.keyPressUser.bind(this);
+    this.keyPressUser = this.keyPressUser.bind(this);
     this.keyPress = this.keyPress.bind(this);
     this.onContent = this.onContent.bind(this);
     this.onUser = this.onUser.bind(this);
