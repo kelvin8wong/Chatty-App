@@ -5,6 +5,13 @@ class Message extends Component {
     const message = this.props.message;
     if (message.type === "incomingNotification") {
       return (<div className="message system">{message.content}</div>);
+    } else if (message.type === "imageMessage") {
+      return (
+        <div className="message">
+          <span className="message-username">{message.username}</span>
+          <img className="message-image" src={message.content}/>
+        </div>
+      )
     } else {
       return (
         <div className="message">

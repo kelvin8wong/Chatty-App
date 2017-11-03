@@ -7,7 +7,7 @@ class App extends Component {
     super(props);
     this.state = {
       type:'',
-      currentUser:'Bob',
+      currentUser:'Anonymous',
       messages: [],
       userCount: 0
     };
@@ -26,6 +26,11 @@ class App extends Component {
       const newMessage = JSON.parse(event.data);
       switch(newMessage.type) {
         case "incomingMessage":
+          this.setState({
+            messages: this.state.messages.concat(newMessage)
+          });
+          break;
+        case "imageMessage":
           this.setState({
             messages: this.state.messages.concat(newMessage)
           });
