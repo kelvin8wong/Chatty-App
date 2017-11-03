@@ -5,29 +5,45 @@ class Chatbar extends Component {
     super();
     this.state = {
       currentUser: '',
-      message: ''
+      message: '',
     }
-
+    this.keyPressUser =this.keyPressUser.bind(this);
     this.keyPress = this.keyPress.bind(this);
     this.onContent = this.onContent.bind(this);
+    this.onUser = this.onUser.bind(this);
   }
 
-  onContent() {
-    const { currentUser, message} = this.refs;
-    
+  onUser(event) {
     this.setState({
-      currentUser: currentUser.value,
-      message: message.value
+      // type:'postNotification',
+      currentUser: event.target.value
+      
+    });
+  }
+
+  onContent(event) {
+    this.setState({
+      // type:'postMessage',
+      message: event.target.value
     });
   }
   
-  keyPress(e){
-    const state = {};
+  keyPressUser(e) {
     if(e.keyCode == 13){
-       this.props.onNewMessage(this.state);
-       state.message='';
+      this.setState({
+        currentUser: e.target.value
+      });
+      this.props.changeName(this.state.currentUser);
     }
-     this.setState(state);
+  }  
+
+  keyPress(e){
+    if(e.keyCode == 13){
+       this.props.sendMsg(this.state.message);
+       this.setState({
+         message: ''
+      });
+    }
   }
 
   // setTimeout(function() {
@@ -37,7 +53,7 @@ class Chatbar extends Component {
   render() {
     return (
         <footer className="chatbar">
-            <input className="chatbar-username" ref="currentUser" onKeyDown={this.keyPress}  onChange={ this.onContent } value={this.state.currentUser} placeholder="Your Name (Optional)"/>
+            <input className="chatbar-username" ref="currentUser" onKeyDown={this.keyPressUser}  onChange={ this.onUser } value={this.state.currentUser} placeholder="Your Name (Optional)"/>
             <input className="chatbar-message" ref="message" onKeyDown={this.keyPress} onChange={ this.onContent } value={ this.state.message } placeholder="Type a message and hit ENTER" />
         </footer>
     );
