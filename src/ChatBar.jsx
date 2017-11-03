@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 
 class Chatbar extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      currentUser: '',
+      currentUser: props.currentUser,
       message: '',
     }
     this.keyPressUser =this.keyPressUser.bind(this);
@@ -15,7 +15,6 @@ class Chatbar extends Component {
 
   onUser(event) {
     this.setState({
-      // type:'postNotification',
       currentUser: event.target.value
       
     });
@@ -23,7 +22,7 @@ class Chatbar extends Component {
 
   onContent(event) {
     this.setState({
-      // type:'postMessage',
+      type:'postMessage',
       message: event.target.value
     });
   }
