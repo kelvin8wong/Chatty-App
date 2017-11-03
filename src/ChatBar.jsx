@@ -45,10 +45,6 @@ class Chatbar extends Component {
     }
   }
 
-  // setTimeout(function() {
-  //   ReactDOM.render(<input value={null} />, mountNode);
-  // }, 1000);
-
   render() {
     return (
         <footer className="chatbar">

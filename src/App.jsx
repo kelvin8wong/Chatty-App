@@ -17,16 +17,15 @@ class App extends Component {
   
   componentDidMount() {
     this.socket = new WebSocket('ws://localhost:3001');
+    //Client gets informed when there is connection to server
     this.socket.onopen = (event) => {
       console.log("Connected to server");
     };
 
     this.socket.onmessage = (event) => {
       const newMessage = JSON.parse(event.data);
-      console.log("checking",newMessage);
       switch(newMessage.type) {
         case "incomingMessage":
-          // handle incoming message
           this.setState({
             messages: this.state.messages.concat(newMessage)
           });
@@ -37,6 +36,7 @@ class App extends Component {
           });
           break;
         case "userCount":
+          // update the number of online users
           this.setState({
             userCount: newMessage.userCount
           });
@@ -47,13 +47,14 @@ class App extends Component {
       }
     }
   }
+
+  // send message to server
   sendMsg(message){
-    
-      // Add a new message to the list of messages in the data store
     const data = {type: 'postMessage', content: message, username: this.state.currentUser};
     this.socket.send(JSON.stringify(data));
   }
 
+  // send a notification to server when there is a change of users
   changeName(name){
     const data = {type: 'postNotification', content: `${this.state.currentUser} has changed their name to ${name}`};
     this.socket.send(JSON.stringify(data));
@@ -67,7 +68,7 @@ class App extends Component {
       <div>
         <nav className="navbar">
           <a href="/" className="navbar-brand">Chatty</a>
-          <span className="user-counter">{this.state.userCount} users Online</span>
+          <span className="user-counter">{this.state.userCount} users online</span>
         </nav>
         <MessageList messages={this.state.messages}/>
         <Chatbar currentUser={this.state.currentUser} sendMsg={ this.sendMsg } changeName={this.changeName} />

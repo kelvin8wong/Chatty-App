@@ -13,8 +13,8 @@ class MessageList extends Component {
       }
     </main>
     );
-  } //render function is ending
-} //class ends here 
+  } 
+} 
 
 export default MessageList;
 
